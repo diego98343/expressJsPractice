@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-const connectingString = 'mongodb+srv://diego98343:3253633Aa@cluster0.ubwlczw.mongodb.net/taskManager?retryWrites=true&w=majority';
+
 
 const connectDB = (url) => {
-    return mongoose.connect(connectingString,{
+    return mongoose.connect(url,{
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
