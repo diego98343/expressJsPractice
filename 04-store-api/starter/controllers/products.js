@@ -2,13 +2,17 @@ const Product = require('../models/product')
 
 
 const getAllProductsStatic = async (req, res) => {
-    const product = await Product.find({});
-    res.status(200).json({ product });
+    const products = await Product.find({
+        featured:true
+    });
+    res.status(200).json({ products, nbHits: products.length });
   
 }
 
+//creating a controller with custom querry 
 const getAllProducts = async (req, res) => {
-    res.status(200).json({ msg: 'product testing route' });
+    const products = await Product.find(req.query);
+    res.status(200).json({ products,nbHits: products.length });
 }
 
 
