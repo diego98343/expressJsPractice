@@ -13,7 +13,7 @@ const getAllProductsStatic = async (req, res) => {
 //creating a controller with custom querry 
 const getAllProducts = async (req, res) => {
 
-    const { featured,company,name,sort } = req.query
+    const { featured,company,name,sort,fields } = req.query
     
     const queryObject = {}
     
@@ -28,7 +28,7 @@ const getAllProducts = async (req, res) => {
     if (name) {
         queryObject.name = { $regex: name, $options: 'i' };
     }
-    console.log(queryObject);
+  
     // const products = await Product.find(queryObject);
     let result = Product.find(queryObject);
 
@@ -39,7 +39,14 @@ const getAllProducts = async (req, res) => {
     } else {
         result = result.sort('createAt');
     }
+
+    if (fields) {
+        const fieldList = fields.split(',').join(' ');
+        result = result.select(fieldList);
+    }
+
     const products = await result
+
     res.status(200).json({ products,nbHits: products.length });
 }
 
